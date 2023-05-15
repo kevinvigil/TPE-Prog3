@@ -31,10 +31,19 @@ public class GrafoDirigido<T> implements Grafo<T>{
         j.agregarArco(1, 4, 10);
         j.agregarArco(10, 7, 10);
 
-        List<Integer> ans = j.dfsForest(j);
+        ServicioBFS auxB = new ServicioBFS(j);
+        List<Integer> ansB = auxB.bfsForest();
 
-        for (Integer integer : ans) {
-            System.out.println(integer);
+        ServicioDFS auxD = new ServicioDFS(j);
+        List<Integer> ansD = auxD.dfsForest();
+        System.out.println("BFS");
+        for (Integer integer : ansB) {
+            System.out.print(integer + " | ");
+        }
+        System.out.println();
+        System.out.println("DFS");
+        for (Integer integer : ansD) {
+            System.out.print(integer + " | ");
         }
         
         // while (u.hasNext()) {
@@ -165,65 +174,5 @@ public class GrafoDirigido<T> implements Grafo<T>{
     public Iterator<Arco<T>> obtenerArcos(int verticeId) {
         return getVerticeConArcos(verticeId).values().iterator();
     }
-
-    // Servicio bfs
-    public List<Integer> bfsForest(Grafo<T> grafo){
-        List<Integer> ans = new ArrayList<>();
-        Iterator<Integer> g = grafo.obtenerVertices();
-        while (g.hasNext()) {
-            Integer curr = g.next();
-            if (!ans.contains(curr)) {
-                ServicioBFS(grafo, curr, ans);
-                
-            }
-        }
-        return ans;
-    }
-
-    public void ServicioBFS(Grafo<T> grafo, Integer vert, List<Integer> ans) {
-        ans.add(vert);
-        List<Integer> next = new LinkedList<>();
-        next.add(vert);
-        while (!next.isEmpty()) {
-            Iterator<Integer> arcos = grafo.obtenerAdyacentes(next.remove(0));
-            while (arcos.hasNext()) {
-                Integer curr = arcos.next();
-                if (!ans.contains(curr)) {
-                    ans.add(curr);
-                    next.add(curr);
-                }
-            }
-        }
-    }
-
-    // Servicio dfs
-    public List<Integer> dfsForest(Grafo<T> grafo) {
-        List<Integer> ans = new ArrayList<>();
-        Iterator<Integer> g = grafo.obtenerVertices();
-        while (g.hasNext()) {
-            Integer curr = g.next();
-            if (!ans.contains(curr)) {
-                ans.add(curr);
-                ServicioDFS(grafo, curr, ans);
-                
-            }
-        }
-        return ans;
-    }
-
-    public void ServicioDFS(Grafo<T> grafo, Integer vert, List<Integer> ans) {
-        Iterator<Integer> arcos = grafo.obtenerAdyacentes(vert);
-        while (arcos.hasNext()) {
-            Integer curr = arcos.next();
-            if (!ans.contains(curr)) {
-                ans.add(curr);
-                ServicioDFS(grafo, curr, ans);
-                
-            }
-        }
-    }
-
-    // // Servicio caminos
-    // public ServicioCaminos(Grafo<?> grafo, int origen, int destino, int lim) {}
-    // public List<List<Integer>> caminos(){}
+    
 }
