@@ -1,54 +1,61 @@
 package TPE;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class GrafoDirigido<T> implements Grafo<T>{
     private HashMap<Integer, HashMap<Integer, Arco<T>>> vertices;
     
     public static void main(String[] args) {
-        GrafoDirigido j = new GrafoDirigido();
+        // IMPLEMENTACION GRAFO
+        // GrafoDirigido j = new GrafoDirigido();
 
-        j.agregarVertice(4);
-        j.agregarVertice(1);
-        j.agregarVertice(2);
-        j.agregarVertice(3);
-        j.agregarVertice(7);
-        j.agregarVertice(8);
-        j.agregarVertice(10);
+        // j.agregarVertice(4);
+        // j.agregarVertice(1);
+        // j.agregarVertice(2);
+        // j.agregarVertice(3);
+        // j.agregarVertice(7);
+        // j.agregarVertice(8);
+        // j.agregarVertice(10);
 
-        j.agregarArco(4, 2, 10);
-        j.agregarArco(4, 8, 10);
-        j.agregarArco(2, 1, 10);
-        j.agregarArco(2, 3, 10);
-        j.agregarArco(8, 7, 10);
-        j.agregarArco(8, 10, 10);
-        j.agregarArco(1, 4, 10);
-        j.agregarArco(10, 7, 10);
+        // j.agregarArco(4, 2, 10);
+        // j.agregarArco(4, 8, 10);
+        // j.agregarArco(2, 1, 10);
+        // j.agregarArco(2, 3, 10);
+        // j.agregarArco(8, 7, 10);
+        // j.agregarArco(8, 10, 10);
+        // j.agregarArco(1, 4, 10);
+        // j.agregarArco(10, 7, 10);
 
-        ServicioBFS auxB = new ServicioBFS(j);
-        List<Integer> ansB = auxB.bfsForest();
 
-        ServicioDFS auxD = new ServicioDFS(j);
-        List<Integer> ansD = auxD.dfsForest();
-        System.out.println("BFS");
-        for (Integer integer : ansB) {
-            System.out.print(integer + " | ");
-        }
-        System.out.println();
-        System.out.println("DFS");
-        for (Integer integer : ansD) {
-            System.out.print(integer + " | ");
-        }
-        
-        // while (u.hasNext()) {
-        //     System.out.println(u.next());
+        // DFS && BFS
+        // ServicioBFS auxB = new ServicioBFS(j);
+        // List<Integer> ansB = auxB.bfsForest();
+
+        // ServicioDFS auxD = new ServicioDFS(j);
+        // List<Integer> ansD = auxD.dfsForest();
+        // System.out.println("BFS");
+        // for (Integer integer : ansB) {
+        //     System.out.print(integer + " | ");
         // }
+        // System.out.println();
+        // System.out.println("DFS");
+        // for (Integer integer : ansD) {
+        //     System.out.print(integer + " | ");
+        // }
+
+        // CAMINOS
+        // ServicioCaminos auxCaminos = new ServicioCaminos(j, 1, 7, 5);
+        // List<List<Integer>> lis = auxCaminos.caminos();
+        // for (List<Integer> list : lis) {
+        //     for (Integer list2 : list) {
+        //         System.out.print(list2 + " | ");
+        //     }
+        //     System.out.println("");
+        // }
+        
     }
 
     public GrafoDirigido(){
