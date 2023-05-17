@@ -29,6 +29,13 @@ public class GrafoDirigido<T> implements Grafo<T>{
         // j.agregarArco(1, 4, 10);
         // j.agregarArco(10, 7, 10);
 
+        // j.borrarVertice(4);
+        // Iterator<Arco<Integer>> ggg = j.obtenerArcos();
+        // while (ggg.hasNext()) {
+        //     Arco<Integer> k = ggg.next();
+        //     System.out.println(k);
+        // }
+
 
         // DFS && BFS
         // ServicioBFS auxB = new ServicioBFS(j);
@@ -62,91 +69,96 @@ public class GrafoDirigido<T> implements Grafo<T>{
         vertices = new HashMap<Integer, HashMap<Integer, Arco<T>>>();
     }
 
+    /**
+    * Complejidad: O(1) debido a que realiza la insercion directa en el HashMap.
+    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    */
     @Override
     public void agregarVertice(int verticeId) {
-        if (!contieneVertice(verticeId)) {
+        if (!vertices.containsKey(verticeId)) {
             HashMap<Integer, Arco<T>> j = new HashMap<Integer, Arco<T>>();
             vertices.put(verticeId, j);
         }
     }
 
+    /**
+    * Complejidad: O(X) donde X son los vertices debido a que recorre buscando para
+    * ver que verices tienen un arco apuntando al que se desea eliminar.
+    */
     @Override
     public void borrarVertice(int verticeId) {
-        HashMap<Integer, Arco<T>> entry = getVerticeConArcos(verticeId);
-        if (entry != null) {
-            for (Map.Entry<Integer, Arco<T>> value : entry.entrySet()) {
-                    if (value.getKey().equals(verticeId)) {
-                        borrarArco(value.getValue().getVerticeOrigen(), verticeId);
-                    }
-                }
+        if (vertices.containsKey(verticeId)) {
             vertices.remove(verticeId);
-        }           
-    }
-
-    private HashMap<Integer, Arco<T>> getVerticeConArcos(int verticeIdO){
-        HashMap<Integer, Arco<T>> aux = null;
-        for (Map.Entry<Integer, HashMap<Integer, Arco<T>>> entry : vertices.entrySet()){
-            if (entry.getKey().equals(verticeIdO)) {
-                aux = entry.getValue();
+            for (Map.Entry<Integer, HashMap<Integer, Arco<T>>> entry : vertices.entrySet()){
+                entry.getValue().remove(verticeId);
             }
-            if (aux != null)
-                break;
-        }
-        return aux;
+        }        
     }
 
+    /**
+    * Complejidad: O(1) debido a que busca directamente el vertice donde insertar.
+    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    */
     @Override
     public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
         if (!existeArco(verticeId1, verticeId2)) {
             Arco<T> aux = new Arco<T>(verticeId1, verticeId2, etiqueta);
-            HashMap<Integer, Arco<T>> entry = getVerticeConArcos(verticeId1);
-            entry.put(verticeId2, aux);
+            vertices.get(verticeId1).put(verticeId2, aux);
         }
     }
 
+    /**
+    * Complejidad: O(1) debido a que busca directamente el vertice  origen y elimina
+    * dentro del HashMap de adyacencia key con el vertice destino.
+    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    */
     @Override
     public void borrarArco(int verticeId1, int verticeId2) {
-        HashMap<Integer, Arco<T>> entry = getVerticeConArcos(verticeId1);
-        if (entry != null) {
-            for (Map.Entry<Integer, Arco<T>> value : entry.entrySet()) {
-                if (value.getKey().equals(verticeId2)) {
-                    value.getValue().setVerticeDestino(-1);
-                    value.getValue().setVerticeOrigen(-1);
-                    entry.remove(value.getKey());
-                }
-            }
-        }   
+        vertices.get(verticeId1).remove(verticeId2);
     }
 
+    /**
+    * Complejidad: O(1) debido a que busca directamente si existe el vertice.
+    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    */
     @Override
     public boolean contieneVertice(int verticeId) {
-        return getVerticeConArcos(verticeId) != null;
+        return vertices.get(verticeId) != null;
     }
 
+    /**
+    * Complejidad: O(1) debido a que busca directamente si existe el vertice origen y luego busca dentro del 
+    * HashMap de adyacencia la key con el vertice destino  y si el resultado es distinto de "null" es porque existe.
+    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    */
     @Override
     public boolean existeArco(int verticeId1, int verticeId2) {
         return obtenerArco(verticeId1, verticeId2) != null;
     }
 
+    /**
+    * Complejidad: O(1) debido a que busca directamente si existe el vertice origen y luego busca dentro del 
+    * HashMap de adyacencia la key con el vertice destino y retorna su valor.
+    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    */
     @Override
     public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
-        HashMap<Integer, Arco<T>> entry = getVerticeConArcos(verticeId1);
-        Arco<T> aux = null;
-        if (entry != null) {
-            for (Map.Entry<Integer, Arco<T>> value : entry.entrySet()){
-                if (value.getKey().equals(verticeId2)) {
-                    aux = value.getValue();
-                }
-            }
-        }
-        return aux;
+        return vertices.get(verticeId1).get(verticeId2);
     }
 
+    /**
+    * Complejidad: O(1) ya que pide el tamaño del HashMap y este lo retorna.
+    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    */
     @Override
     public int cantidadVertices() {
         return vertices.size();
     }
 
+    /**
+    * Complejidad: O(X) donde X es la cantidad de vertices debido a que debe sumar la cantidad
+    * de arcos que posee cada uno para devolverlo.
+    */
     @Override
     public int cantidadArcos() {
         int sum = 0;
@@ -163,7 +175,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     @Override
     public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-        return getVerticeConArcos(verticeId).keySet().iterator();
+        return vertices.get(verticeId).keySet().iterator();
     }
 
     @Override
@@ -179,7 +191,6 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     @Override
     public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-        return getVerticeConArcos(verticeId).values().iterator();
+        return vertices.get(verticeId).values().iterator();
     }
-    
 }

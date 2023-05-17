@@ -31,15 +31,15 @@ public class ServicioCaminos {
 			ans.add(li);
 
 		} else {
-
 			if (limite > 0) {
 				Iterator<Integer> curr = grafo.obtenerAdyacentes(ori);
 
 				while (curr.hasNext()) {
 					Integer value = curr.next();
-					List<Integer> aux = new ArrayList<>(li);
-
-					if (!li.contains(value)) {
+					int ind = li.indexOf(value);
+					
+					if (ind == -1 || li.indexOf(ind - 1) != ori) {
+						List<Integer> aux = new ArrayList<>(li);
 						caminosValidos(value, limite - 1, aux, ans);
 					}
 				}
