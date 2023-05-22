@@ -29,13 +29,11 @@ public class GrafoDirigido<T> implements Grafo<T>{
         // j.agregarArco(1, 4, 10);
         // j.agregarArco(10, 7, 10);
 
-        // j.borrarVertice(4);
         // Iterator<Arco<Integer>> ggg = j.obtenerArcos();
         // while (ggg.hasNext()) {
         //     Arco<Integer> k = ggg.next();
         //     System.out.println(k);
         // }
-
 
         // DFS && BFS
         // ServicioBFS auxB = new ServicioBFS(j);
@@ -47,13 +45,16 @@ public class GrafoDirigido<T> implements Grafo<T>{
         // for (Integer integer : ansB) {
         //     System.out.print(integer + " | ");
         // }
+
         // System.out.println();
         // System.out.println("DFS");
         // for (Integer integer : ansD) {
         //     System.out.print(integer + " | ");
         // }
+        // System.out.println("");
 
         // CAMINOS
+        // System.out.println("CAMINOS");
         // ServicioCaminos auxCaminos = new ServicioCaminos(j, 1, 7, 5);
         // List<List<Integer>> lis = auxCaminos.caminos();
         // for (List<Integer> list : lis) {
@@ -62,7 +63,6 @@ public class GrafoDirigido<T> implements Grafo<T>{
         //     }
         //     System.out.println("");
         // }
-        
     }
 
     public GrafoDirigido(){
@@ -71,7 +71,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     /**
     * Complejidad: O(1) debido a que realiza la insercion directa en el HashMap.
-    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria de sus metodos terminan siendo O(1).
     */
     @Override
     public void agregarVertice(int verticeId) {
@@ -82,8 +82,8 @@ public class GrafoDirigido<T> implements Grafo<T>{
     }
 
     /**
-    * Complejidad: O(X) donde X son los vertices debido a que recorre buscando para
-    * ver que verices tienen un arco apuntando al que se desea eliminar.
+    * Complejidad: O(n) donde n son los vertices debido a que recorre buscando para
+    * ver que vertices tienen un arco apuntando al que se desea eliminar.
     */
     @Override
     public void borrarVertice(int verticeId) {
@@ -97,7 +97,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     /**
     * Complejidad: O(1) debido a que busca directamente el vertice donde insertar.
-    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria de sus metodos terminan siendo O(1).
     */
     @Override
     public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
@@ -110,7 +110,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     /**
     * Complejidad: O(1) debido a que busca directamente el vertice  origen y elimina
     * dentro del HashMap de adyacencia key con el vertice destino.
-    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan siendo O(1).
     */
     @Override
     public void borrarArco(int verticeId1, int verticeId2) {
@@ -119,7 +119,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     /**
     * Complejidad: O(1) debido a que busca directamente si existe el vertice.
-    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan siendo O(1).
     */
     @Override
     public boolean contieneVertice(int verticeId) {
@@ -129,7 +129,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     /**
     * Complejidad: O(1) debido a que busca directamente si existe el vertice origen y luego busca dentro del 
     * HashMap de adyacencia la key con el vertice destino  y si el resultado es distinto de "null" es porque existe.
-    * Devido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria  de sus metodos terminan siendo O(1).
     */
     @Override
     public boolean existeArco(int verticeId1, int verticeId2) {
@@ -139,7 +139,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     /**
     * Complejidad: O(1) debido a que busca directamente si existe el vertice origen y luego busca dentro del 
     * HashMap de adyacencia la key con el vertice destino y retorna su valor.
-    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria de sus metodos terminan siendo O(1).
     */
     @Override
     public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
@@ -148,7 +148,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
     /**
     * Complejidad: O(1) ya que pide el tamaño del HashMap y este lo retorna.
-    * Devido a la optimizacion que posee HashMap la mayoria de sus metodos terminan cieno o(1).
+    * Debido a la optimizacion que posee HashMap la mayoria de sus metodos terminan siendo O(1).
     */
     @Override
     public int cantidadVertices() {
@@ -156,7 +156,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     }
 
     /**
-    * Complejidad: O(X) donde X es la cantidad de vertices debido a que debe sumar la cantidad
+    * Complejidad: O(n) donde n es la cantidad de vertices debido a que debe sumar la cantidad
     * de arcos que posee cada uno para devolverlo.
     */
     @Override
@@ -168,16 +168,26 @@ public class GrafoDirigido<T> implements Grafo<T>{
         return sum;
     }
 
+    /**
+    * Complejidad: O(1) debido a que solo se esta llamando al iterador. Sin embargo, 
+    * el funcionamiento interno de este, es O(n)
+    */
     @Override
     public Iterator<Integer> obtenerVertices() {
         return vertices.keySet().iterator();
     }
-
+    /*
+    * Mismo caso que obtenerVertices() 
+    */
     @Override
     public Iterator<Integer> obtenerAdyacentes(int verticeId) {
         return vertices.get(verticeId).keySet().iterator();
     }
 
+    /*
+    * Complejidad: O(n²) debido a que hay un bloque de for anidado adentro de otro, 
+    * en cada caso habiendo un llamado a memoria 
+    */
     @Override
     public Iterator<Arco<T>> obtenerArcos() {
         LinkedList<Arco<T>> aux = new LinkedList<>();
@@ -189,6 +199,9 @@ public class GrafoDirigido<T> implements Grafo<T>{
         return aux.iterator();
     }
 
+    /* 
+    * Mismo caso que obtenerVertices() 
+    */
     @Override
     public Iterator<Arco<T>> obtenerArcos(int verticeId) {
         return vertices.get(verticeId).values().iterator();
