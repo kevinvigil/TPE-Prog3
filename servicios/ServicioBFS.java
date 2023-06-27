@@ -1,9 +1,11 @@
-package TPE;
+package TPE.servicios;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import TPE.grafo.Grafo;
 
 public class ServicioBFS {
     private Grafo<?> grafo;

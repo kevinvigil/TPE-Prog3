@@ -1,4 +1,4 @@
-package TPE;
+package TPE.grafo;
 import java.util.Iterator;
 
 public interface Grafo<T> {

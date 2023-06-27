@@ -1,8 +1,10 @@
-package TPE;
+package TPE.servicios;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import TPE.grafo.Grafo;
 
 public class ServicioDFS {
     private Grafo<?> grafo;

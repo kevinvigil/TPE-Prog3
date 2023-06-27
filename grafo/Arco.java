@@ -1,4 +1,4 @@
-package TPE;
+package TPE.grafo;
 
 public class Arco<T> {
     private int verticeOrigen;

@@ -1,8 +1,10 @@
-package TPE;
+package TPE.servicios;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import TPE.grafo.Grafo;
 
 public class ServicioCaminos {
 
@@ -21,7 +23,7 @@ public class ServicioCaminos {
 	public List<List<Integer>> caminos() {
 		List<List<Integer>> ans = new ArrayList<>();
 		List<Integer> aux = new ArrayList<>();
-		caminosValidos(origen, lim - 1, aux, ans);
+		caminosValidos(origen, lim, aux, ans);
 		return ans;
 	}
 
