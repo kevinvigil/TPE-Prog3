@@ -1,9 +1,13 @@
 package TPE;
 
 import java.util.Iterator;
+import java.util.List;
+
+import TPE.algoritmos.BackArcos;
 import TPE.grafo.Arco;
 import TPE.grafo.Grafo;
 import TPE.grafo.GrafoDirigido;
+import TPE.servicios.ServicioCaminos;
 
 public class Main {
 
@@ -50,10 +54,16 @@ public class Main {
         */
 	    
         // Cargamos un grafo dirigido
+		// TPE\\dataTest\\DT1.txt
+		// TPE\dataTest\DT2.txt
+		// TPE\dataTest\DT3.txt
         String path = "TPE\\dataTest\\DT1.txt";
 		CSVReader reader = new CSVReader(path);
 		reader.read(g);
         mostrarGrafo(g);
+		BackArcos bac = new BackArcos(g);
+		bac.BackT(1, 4);
+	    
 
         /*
 	    ServicioDFS dfs = new ServicioDFS(g);
