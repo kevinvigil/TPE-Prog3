@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import TPE.algoritmos.BackArcos;
+import TPE.algoritmos.GreedyArcos;
 import TPE.grafo.Arco;
 import TPE.grafo.Grafo;
 import TPE.grafo.GrafoDirigido;
@@ -60,10 +61,12 @@ public class Main {
         String path = "TPE\\dataTest\\DT1.txt";
 		CSVReader reader = new CSVReader(path);
 		reader.read(g);
-        mostrarGrafo(g);
-		BackArcos bac = new BackArcos(g);
-		bac.BackT(1, 4);
+        // mostrarGrafo(g);
+		// BackArcos bac = new BackArcos(g);
+		// bac.BackT(1, 4);
 	    
+		GreedyArcos gre = new GreedyArcos();
+		gre.dijkstra(g, 1, 5);
 
         /*
 	    ServicioDFS dfs = new ServicioDFS(g);
