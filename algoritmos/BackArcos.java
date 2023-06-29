@@ -20,10 +20,15 @@ public class BackArcos {
         ArrayList<Arco> c = new ArrayList<>();
         BackT(c, actual, destino);
         Iterator<Arco> aux = solucion.iterator();
+        int suma = 0;
         while (aux.hasNext()) {
             Arco s = aux.next();
-            System.out.println(s.getVerticeOrigen()+ " -> "+ s.getVerticeDestino());
+            System.out.print(s.getVerticeOrigen()+ "-"+ s.getVerticeDestino()+" , ");
+            suma += (Integer)s.getEtiqueta();
         }
+        System.out.println();
+        System.out.println(suma+" kms");
+        System.out.println("Metrica BackTracking");
     }
 
 	private void BackT(ArrayList<Arco> curr, int actual, int destino){

@@ -58,15 +58,15 @@ public class Main {
 		// TPE\\dataTest\\DT1.txt
 		// TPE\dataTest\DT2.txt
 		// TPE\dataTest\DT3.txt
-        String path = "TPE\\dataTest\\DT1.txt";
+        String path = "TPE\\dataTest\\DT2.txt";
 		CSVReader reader = new CSVReader(path);
 		reader.read(g);
         // mostrarGrafo(g);
-		// BackArcos bac = new BackArcos(g);
-		// bac.BackT(1, 4);
+		BackArcos bac = new BackArcos(g);
+		bac.BackT(6, 1);
 	    
-		GreedyArcos gre = new GreedyArcos();
-		gre.dijkstra(g, 1, 5);
+		GreedyArcos gre = new GreedyArcos(g);
+		gre.Greedy( 6, 1);
 
         /*
 	    ServicioDFS dfs = new ServicioDFS(g);
