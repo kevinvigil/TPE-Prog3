@@ -106,6 +106,9 @@ public class Main {
 		GreedyArcos gre = new GreedyArcos(g);
 		gre.Greedy( 1, 6);
 
+		ServicioCaminos caminos = new ServicioCaminos(g, 1, 6, 10);
+	    List<List<Integer>> resultado =  caminos.caminos();
+		System.out.println(resultado);
         /*
 	    ServicioDFS dfs = new ServicioDFS(g);
 	    List<Integer> orden = dfs.dfsForest();
@@ -118,8 +121,8 @@ public class Main {
 	    System.out.println("BFS: (mas comun: [1, 2, 3, 4, 6, 5, 7])");
 	    System.out.println(orden);
 
-	    ServicioCaminos caminos = new ServicioCaminos(g, 1, 6, 5);
-	    List<List<Integer>> resultado =  caminos.caminos();
+	    // ServicioCaminos caminos = new ServicioCaminos(g, 1, 6, 5);
+	    // List<List<Integer>> resultado =  caminos.caminos();
 	    
 	    //CAMINOS
 	    System.out.println("Caminos de 1 a 6 limite 5:([[1, 2, 6], [1, 3, 5, 6]])");
