@@ -16,21 +16,21 @@ public class GreedyArcos {
 
     public void Greedy(int origen, int destino) {
         ArrayList<Integer> padre = dijkstra(origen, destino);
-        ArrayList<Arco> solucion = new ArrayList<>();
+        ArrayList<Arco<Integer>> solucion = new ArrayList<>();
         while (origen != destino) {
-            Arco ar = g.obtenerArco(padre.get(destino), destino);
+            Arco<Integer> ar = g.obtenerArco(padre.get(destino), destino);
             solucion.add(ar);
             destino = padre.get(destino);
         }
         int curr = 0;
         while (curr<solucion.size()/2) {
-            Arco aux = solucion.get(curr);
+            Arco<Integer> aux = solucion.get(curr);
             solucion.set(curr, solucion.get(solucion.size()-1-curr));
             solucion.set(solucion.size()-1-curr, aux);
             curr++;
         }
         int suma = 0;
-        for (Arco arco : solucion) {
+        for (Arco<Integer> arco : solucion) {
             System.out.print(arco.getVerticeOrigen()+"-"+ arco.getVerticeDestino()+" , ");
             suma += (Integer)arco.getEtiqueta();
         }
@@ -44,27 +44,29 @@ public class GreedyArcos {
         ArrayList<Integer> distancia = new ArrayList<>();
         ArrayList<Integer> padre = new ArrayList<>();
         Iterator<Integer> verti = g.obtenerVertices();
-        cargar(distancia, g.cantidadVertices()+1, Integer.MAX_VALUE);
-        cargar(padre, g.cantidadVertices()+1, -1);
+        distancia.add(Integer.MAX_VALUE);
+        padre.add(null);
         while (verti.hasNext()) {
-            Integer curr = verti.next();
+            int curr = verti.next();
+            distancia.add(Integer.MAX_VALUE);
+            padre.add(null);
             vertices.add(curr);
-            padre.set(curr, null);
         }
         distancia.set(origen, 0);
-        ArrayList<Integer> valido = new ArrayList<>(vertices); 
         ArrayList<Integer> considerado = new ArrayList<>();
-        Integer u = origen;
-        while (vertices.size() > considerado.size()) { 
-            valido.removeAll(considerado);  
-            u = getArcoMenor(distancia, valido);
+        int contador = vertices.size();
+        while (contador > considerado.size()) { 
+            vertices.removeAll(considerado);  
+            int u = getArcoMenor(distancia, vertices);
             considerado.add(u);
-            valido.removeAll(considerado);
-            for (Integer v : valido) {
-                if (g.obtenerArco(u, v) != null) {
-                    Arco<Integer> aux = g.obtenerArco(u, v);
-                    if (distancia.get(u) + aux.getEtiqueta() < distancia.get(v)) {
-                        distancia.set(v, distancia.get(u) + aux.getEtiqueta());
+            vertices.removeAll(considerado);
+            for (Integer v : vertices) {
+                Arco<Integer> curr = g.obtenerArco(u, v);
+                if (curr != null) {
+                    Arco<Integer> aux = curr;
+                    int value = distancia.get(u) + aux.getEtiqueta();
+                    if (value < distancia.get(v)) {
+                        distancia.set(v, value);
                         padre.set(v, u);
                     }
                 }
@@ -74,18 +76,11 @@ public class GreedyArcos {
         return padre;
     }
 
-    private void cargar(ArrayList<Integer> arr, int i, int value) {
-        for (int j = 0; j < i; j++) {
-            arr.add(value);
-        }
-    }
-
     private Integer getArcoMenor(ArrayList<Integer> distancia, ArrayList<Integer> valido) {
         Integer vertice = null;
         for (int i = 0; i < valido.size(); i++) {
             int aux = valido.get(i);
-            int val = distancia.get(aux);
-            if (vertice == null || val<distancia.get(vertice)){
+            if (vertice == null || distancia.get(aux)<distancia.get(vertice)){
                 vertice = aux;
             }
         }

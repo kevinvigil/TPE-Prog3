@@ -1,5 +1,7 @@
 package TPE;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +28,34 @@ public class Main {
 				System.out.println("    " + v + "-> " + arco.getVerticeDestino() + " (" + arco.getEtiqueta() + ")");
 			}
 		}
+	}
+	
+	public static void cargaAutomatica(Grafo g){
+		// TPE\\dataTest\\DT1.txt
+		// TPE\dataTest\DT2.txt
+		// TPE\dataTest\DT3.txt
+		carga("TPE\\dataTest\\DT2.txt", g);
+	}
+
+	public static void cargaConsola(Grafo g){
+		try {
+			BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("¿Ingrese direccion de enlace?");
+			String value = entrada.readLine();
+			while (value != "TPE\\dataTest\\DT1.txt" && value != "TPE\\dataTest\\DT2.txt" && value != "TPE\\dataTest\\DT1.txt") {
+				System.out.println("Respuesta no valida");
+				System.out.println("Intente nuevamente");
+				value = entrada.readLine();
+			}
+			carga(value, g);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public static void carga(String path, Grafo g){
+		CSVReader reader = new CSVReader(path);
+		reader.read(g);
 	}
 
 	public static void main(String[] args) {
@@ -55,18 +85,26 @@ public class Main {
         */
 	    
         // Cargamos un grafo dirigido
-		// TPE\\dataTest\\DT1.txt
-		// TPE\dataTest\DT2.txt
-		// TPE\dataTest\DT3.txt
-        String path = "TPE\\dataTest\\DT2.txt";
-		CSVReader reader = new CSVReader(path);
-		reader.read(g);
+		if (args.length>0) {
+			String value = "";
+			for (String s : args) {
+				value+=s;
+			}
+			carga(value, g);
+		}else{
+			cargaAutomatica(g);
+			// cargaConsola(g)
+		}
+		
         // mostrarGrafo(g);
+
+		// BackTracking
 		BackArcos bac = new BackArcos(g);
-		bac.BackT(6, 1);
+		bac.BackT(1, 6);
 	    
+		// Greedy
 		GreedyArcos gre = new GreedyArcos(g);
-		gre.Greedy( 6, 1);
+		gre.Greedy( 1, 6);
 
         /*
 	    ServicioDFS dfs = new ServicioDFS(g);
