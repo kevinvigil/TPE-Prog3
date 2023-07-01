@@ -99,6 +99,9 @@ public class Main {
 		}
 		
         // mostrarGrafo(g);
+		// Pekoe
+		Pekoe pe = new Pekoe(g);
+		pe.greedy();
 
 		// BackTracking
 		BackArcos bac = new BackArcos(g);
@@ -108,7 +111,7 @@ public class Main {
 		GreedyArcos gre = new GreedyArcos(g);
 		gre.Greedy( 1, 6);
 
-		ServicioCaminos caminos = new ServicioCaminos(g, 1, 6, 10);
+		ServicioCaminos caminos = new ServicioCaminos(g, 1, 6, 2);
 	    List<List<Integer>> resultado =  caminos.caminos();
 		System.out.println(resultado);
         /*

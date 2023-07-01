@@ -4,50 +4,52 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import TPE.grafo.Arco;
 import TPE.grafo.Grafo;
 
-public class ServicioCaminos {
+public class ServicioCaminos<T> {
 
-    private Grafo<?> grafo;
+    private Grafo<?> graph;
 	private int origen;
 	private int destino;
 	private int lim;
+	private List<List<Integer>> ans;
 	
 	public ServicioCaminos(Grafo<?> grafo, int origen, int destino, int lim) {
-		this.grafo = grafo;
+		this.graph = grafo;
 		this.origen = origen;
 		this.destino = destino;
 		this.lim = lim;
+		ans = new ArrayList<List<Integer>>();
 	}
 
 	public List<List<Integer>> caminos() {
-		List<List<Integer>> ans = new ArrayList<>();
-		List<Integer> aux = new ArrayList<>();
-		caminosValidos(origen, lim, aux, ans);
-		return ans;
+		List<Integer> li = new ArrayList<>();
+		List<Arco> ar = new ArrayList<>();
+		li.add(origen);
+		caminosValidos(origen, lim, li, ar);
+		return this.ans;
 	}
 
-	private void caminosValidos(int ori, int limite, List<Integer> li, List<List<Integer>> ans){
-		li.add(ori);
+	private void caminosValidos(int ori, int limite, List<Integer> li, List<Arco> ar){
 		if (ori == destino) {
-			ans.add(li);
-
+			this.ans.add(new ArrayList<>(li));
 		} else {
-			if (limite > 0) {
-				Iterator<Integer> curr = grafo.obtenerAdyacentes(ori);
-
+			if (limite > ar.size()) {
+				Iterator<Integer> curr = graph.obtenerAdyacentes(ori);
 				while (curr.hasNext()) {
 					Integer value = curr.next();
-					int ind = li.indexOf(value);
-					
-					if (ind == -1 || li.indexOf(ind - 1) != ori) {
-						List<Integer> aux = new ArrayList<>(li);
-						caminosValidos(value, limite - 1, aux, ans);
+					Arco arco = graph.obtenerArco(ori, value);
+					if (!ar.contains(arco)) {
+						ar.add(arco);
+						li.add(value);
+						caminosValidos(value, limite, li, ar);
+						li.remove(value);
+						ar.remove(arco);
 					}
+					
 				}
 			}
 		}
 	}
-
-
 }

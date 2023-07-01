@@ -41,7 +41,7 @@ public class Arco<T> {
     }
 
 	public boolean equals(Object o){
-		Arco value = (Arco)o;
+		Arco<T> value = (Arco)o;
 		if (this.verticeOrigen == value.getVerticeOrigen() && this.getVerticeDestino() == value.getVerticeDestino()) {
 			return true;
 		}
