@@ -85,6 +85,9 @@ public class GrafoDirigido<T> implements Grafo<T>{
     */
     @Override
     public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
+        if (verticeId1 == verticeId2)
+            return null;
+
         return vertices.get(verticeId1).get(verticeId2);
     }
 
@@ -123,6 +126,9 @@ public class GrafoDirigido<T> implements Grafo<T>{
     */
     @Override
     public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+        if (verticeId == 0)
+            return null;
+
         return vertices.get(verticeId).keySet().iterator();
     }
 

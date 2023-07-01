@@ -2,11 +2,13 @@ package TPE;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import TPE.algoritmos.BackArcos;
 import TPE.algoritmos.GreedyArcos;
+import TPE.algoritmos.Pekoe;
 import TPE.grafo.Arco;
 import TPE.grafo.Grafo;
 import TPE.grafo.GrafoDirigido;

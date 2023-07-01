@@ -10,7 +10,7 @@ public class GreedyArcos {
 
     private Grafo g;
 
-    public GreedyArcos(Grafo grafo){
+    public GreedyArcos(Grafo grafo) {
         this.g = grafo;
     }
 
@@ -23,23 +23,23 @@ public class GreedyArcos {
             destino = padre.get(destino);
         }
         int curr = 0;
-        while (curr<solucion.size()/2) {
+        while (curr < solucion.size() / 2) {
             Arco<Integer> aux = solucion.get(curr);
-            solucion.set(curr, solucion.get(solucion.size()-1-curr));
-            solucion.set(solucion.size()-1-curr, aux);
+            solucion.set(curr, solucion.get(solucion.size() - 1 - curr));
+            solucion.set(solucion.size() - 1 - curr, aux);
             curr++;
         }
         int suma = 0;
         for (Arco<Integer> arco : solucion) {
-            System.out.print(arco.getVerticeOrigen()+"-"+ arco.getVerticeDestino()+" , ");
-            suma += (Integer)arco.getEtiqueta();
+            System.out.print(arco.getVerticeOrigen() + "-" + arco.getVerticeDestino() + " , ");
+            suma += (Integer) arco.getEtiqueta();
         }
         System.out.println();
-        System.out.println(suma+" kms");
+        System.out.println(suma + " kms");
         System.out.println("Metrica Greedy");
     }
 
-    private ArrayList<Integer> dijkstra(int origen, int destino) {
+    public ArrayList<Integer> dijkstra(int origen, int destino) {
         ArrayList<Integer> vertices = new ArrayList<>();
         ArrayList<Integer> distancia = new ArrayList<>();
         ArrayList<Integer> padre = new ArrayList<>();
@@ -55,8 +55,9 @@ public class GreedyArcos {
         distancia.set(origen, 0);
         ArrayList<Integer> considerado = new ArrayList<>();
         int contador = vertices.size();
-        while (contador > considerado.size()) { 
-            vertices.removeAll(considerado);  
+
+        while (contador > considerado.size()) {
+            vertices.removeAll(considerado);
             int u = getArcoMenor(distancia, vertices);
             considerado.add(u);
             vertices.removeAll(considerado);
@@ -70,7 +71,7 @@ public class GreedyArcos {
                         padre.set(v, u);
                     }
                 }
-                
+
             }
         }
         return padre;
@@ -80,7 +81,7 @@ public class GreedyArcos {
         Integer vertice = null;
         for (int i = 0; i < valido.size(); i++) {
             int aux = valido.get(i);
-            if (vertice == null || distancia.get(aux)<distancia.get(vertice)){
+            if (vertice == null || distancia.get(aux) < distancia.get(vertice)) {
                 vertice = aux;
             }
         }
