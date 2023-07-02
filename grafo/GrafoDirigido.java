@@ -8,7 +8,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     private HashMap<Integer, HashMap<Integer, Arco<T>>> vertices;
 
     public GrafoDirigido(){
-        vertices = new HashMap<Integer, HashMap<Integer, Arco<T>>>();
+        vertices = new HashMap<>();
     }
 
     /**
@@ -18,7 +18,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
     @Override
     public void agregarVertice(int verticeId) {
         if (!vertices.containsKey(verticeId)) {
-            HashMap<Integer, Arco<T>> j = new HashMap<Integer, Arco<T>>();
+            HashMap<Integer, Arco<T>> j = new HashMap<>();
             vertices.put(verticeId, j);
         }
     }
@@ -85,7 +85,17 @@ public class GrafoDirigido<T> implements Grafo<T>{
     */
     @Override
     public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
-        return vertices.get(verticeId1).get(verticeId2);
+        if (!vertices.containsKey(verticeId1) || !vertices.containsKey(verticeId2))
+            return null;
+
+        Iterator<Arco<T>> i = this.obtenerArcos(verticeId1);
+        while (i.hasNext()){
+            Arco<T> arco = i.next();
+            if (arco.getVerticeDestino() == verticeId2)
+                return arco;
+        }
+
+        return null;
     }
 
     /**

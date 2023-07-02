@@ -29,6 +29,7 @@ public class GreedyArcos {
             solucion.set(solucion.size()-1-curr, aux);
             curr++;
         }
+
         int suma = 0;
         for (Arco<Integer> arco : solucion) {
             System.out.print(arco.getVerticeOrigen()+"-"+ arco.getVerticeDestino()+" , ");
@@ -78,12 +79,10 @@ public class GreedyArcos {
 
     private Integer getArcoMenor(ArrayList<Integer> distancia, ArrayList<Integer> valido) {
         Integer vertice = null;
-        for (int i = 0; i < valido.size(); i++) {
-            int aux = valido.get(i);
-            if (vertice == null || distancia.get(aux)<distancia.get(vertice)){
+        for (int aux : valido)
+            if (vertice == null || distancia.get(aux) < distancia.get(vertice))
                 vertice = aux;
-            }
-        }
+
         return vertice;
     }
 }

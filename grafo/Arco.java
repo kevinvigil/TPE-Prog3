@@ -37,14 +37,11 @@ public class Arco<T> {
 
     @Override
     public String toString() {
-        return "vertice Origen: "+verticeOrigen + "| vertice Destino: "+ verticeDestino;
+        return "E"+verticeOrigen + "-E"+ verticeDestino + ", ";
     }
 
 	public boolean equals(Object o){
 		Arco value = (Arco)o;
-		if (this.verticeOrigen == value.getVerticeOrigen() && this.getVerticeDestino() == value.getVerticeDestino()) {
-			return true;
-		}
-		return false;
+		return this.verticeOrigen == value.getVerticeOrigen() && this.getVerticeDestino() == value.getVerticeDestino();
 	}
 }
