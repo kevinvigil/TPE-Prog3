@@ -30,10 +30,10 @@ public class Main {
 	}
 	
 	public static void cargaAutomatica(Grafo g){
-		// ./dataTest/DT1.txt
-		// ./dataTest/DT2.txt
-		// ./dataTest/DT3.txt
-		carga("./dataTest/DT2.txt", g);
+		// TPE\dataTest\DT1.txt
+		// TPE\dataTest\DT2.txt
+		// TPE\dataTest\DT3.txt
+		carga("TPE\\dataTest\\DT3.txt", g);
 	}
 
 	public static void cargaConsola(Grafo g){
@@ -75,14 +75,10 @@ public class Main {
 		System.out.println("Backtracking:");
 		Backtracking b = new Backtracking(g);
 		b.backtracking();
-	    
+	    System.out.println("---------");
 		// Greedy
-		// GreedyArcos gre = new GreedyArcos(g);
-		// gre.Greedy( 1, 6);
-		// System.out.println("-----");
-		// Greedy
-		// System.out.println("Greedy: ");
-		// Greedy greed = new Greedy(g);
-		// greed.greedy();
+		System.out.println("Greedy: ");
+		GreedyArcos greed = new GreedyArcos(g);
+		greed.Greedy();
 	}
 }

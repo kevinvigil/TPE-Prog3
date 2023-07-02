@@ -9,44 +9,60 @@ import TPE.grafo.Grafo;
 public class GreedyArcos {
 
     private Grafo g;
+    private double totalTime;
+    private long startTime;
+
 
     public GreedyArcos(Grafo grafo) {
         this.g = grafo;
     }
 
-    public void Greedy(int origen, int destino) {
-        ArrayList<Integer> padre = dijkstra(origen, destino);
+    public void Greedy() {
+        this.refreshTime();
+
+        Iterator<Integer> vertice = g.obtenerVertices();
+        ArrayList<Integer> padre = dijkstra(vertice.next());
         ArrayList<Arco<Integer>> solucion = new ArrayList<>();
-        while (origen != destino) {
-            Arco<Integer> ar = g.obtenerArco(padre.get(destino), destino);
-            solucion.add(ar);
-            destino = padre.get(destino);
-        }
-        int curr = 0;
-        while (curr < solucion.size() / 2) {
-            Arco<Integer> aux = solucion.get(curr);
-            solucion.set(curr, solucion.get(solucion.size() - 1 - curr));
-            solucion.set(solucion.size() - 1 - curr, aux);
-            curr++;
+        int currDist = 0;
+        
+        while (!full(padre)) {
+            padre = dijkstra(vertice.next());
         }
 
-        int suma = 0;
-        for (Arco<Integer> arco : solucion) {
-            System.out.print(arco.getVerticeOrigen() + "-" + arco.getVerticeDestino() + " , ");
-            suma += (Integer) arco.getEtiqueta();
+        for (int i = 0; i < padre.size(); i++) {
+            Integer curr = padre.get(i);
+            if (curr != null) {
+                Arco<Integer> arco = g.obtenerArco(padre.get(i), i);
+                solucion.add(arco);
+                currDist += (Integer) arco.getEtiqueta();
+            }
         }
-        System.out.println();
-        System.out.println(suma + " kms");
-        System.out.println("Metrica Greedy");
+
+        this.setTotalTime(startTime, System.nanoTime());
+
+        System.out.println(solucion);
+        System.out.println("Tiempo: " + totalTime+"ms");
+        System.out.println("Distancia: " + currDist + " kilometros");
     }
 
-    public ArrayList<Integer> dijkstra(int origen, int destino) {
+    private boolean full(ArrayList<Integer> padre) {
+        int cont = 0;
+        for (Integer i : padre) 
+            if (i == null) 
+                cont++;
+        return cont<3;
+    }
+
+    public ArrayList<Integer> dijkstra(int origen) {
         ArrayList<Integer> vertices = new ArrayList<>();
         ArrayList<Integer> distancia = new ArrayList<>();
         ArrayList<Integer> padre = new ArrayList<>();
+        ArrayList<Integer> considerado = new ArrayList<>();
         Iterator<Integer> verti = g.obtenerVertices();
+
         distancia.add(Integer.MAX_VALUE);
         padre.add(null);
+
         while (verti.hasNext()) {
             int curr = verti.next();
             distancia.add(Integer.MAX_VALUE);
@@ -54,7 +70,6 @@ public class GreedyArcos {
             vertices.add(curr);
         }
         distancia.set(origen, 0);
-        ArrayList<Integer> considerado = new ArrayList<>();
         int contador = vertices.size();
 
         while (contador > considerado.size()) {
@@ -62,11 +77,14 @@ public class GreedyArcos {
             int u = getArcoMenor(distancia, vertices);
             considerado.add(u);
             vertices.removeAll(considerado);
+
             for (Integer v : vertices) {
                 Arco<Integer> curr = g.obtenerArco(u, v);
+
                 if (curr != null) {
                     Arco<Integer> aux = curr;
                     int value = distancia.get(u) + aux.getEtiqueta();
+
                     if (value < distancia.get(v)) {
                         distancia.set(v, value);
                         padre.set(v, u);
@@ -85,5 +103,14 @@ public class GreedyArcos {
                 vertice = aux;
 
         return vertice;
+    }
+
+    private void refreshTime(){
+        this.startTime = System.nanoTime();
+        this.totalTime = 0;
+    }
+
+    private void setTotalTime(long startTime, long endTime){
+        this.totalTime = (double) (endTime - startTime) / 1_000_000;
     }
 }

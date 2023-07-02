@@ -43,9 +43,8 @@ public class Backtracking {
 
         this.setTotalTime(startTime, System.nanoTime());
 
-        for (Arco<Integer> integerArco : currSolution)
-            System.out.print(integerArco);
-        System.out.println("\nTiempo: " + totalTime+"s");
+        System.out.print(currSolution);
+        System.out.println("\nTiempo: " + totalTime+"ms");
         System.out.println("Distancia: " + currDist + " kilometros");
         return currSolution;
     }
